@@ -1,8 +1,0 @@
-/Users/ulyssecarion/dev/src/github.com/jddf/jddf-csharp/Jddf.Jddf/bin/Debug/netstandard2.0/Jddf.Jddf.deps.json
-/Users/ulyssecarion/dev/src/github.com/jddf/jddf-csharp/Jddf.Jddf/bin/Debug/netstandard2.0/Jddf.Jddf.dll
-/Users/ulyssecarion/dev/src/github.com/jddf/jddf-csharp/Jddf.Jddf/bin/Debug/netstandard2.0/Jddf.Jddf.pdb
-/Users/ulyssecarion/dev/src/github.com/jddf/jddf-csharp/Jddf.Jddf/obj/Debug/netstandard2.0/Jddf.Jddf.csprojAssemblyReference.cache
-/Users/ulyssecarion/dev/src/github.com/jddf/jddf-csharp/Jddf.Jddf/obj/Debug/netstandard2.0/Jddf.Jddf.AssemblyInfoInputs.cache
-/Users/ulyssecarion/dev/src/github.com/jddf/jddf-csharp/Jddf.Jddf/obj/Debug/netstandard2.0/Jddf.Jddf.AssemblyInfo.cs
-/Users/ulyssecarion/dev/src/github.com/jddf/jddf-csharp/Jddf.Jddf/obj/Debug/netstandard2.0/Jddf.Jddf.dll
-/Users/ulyssecarion/dev/src/github.com/jddf/jddf-csharp/Jddf.Jddf/obj/Debug/netstandard2.0/Jddf.Jddf.pdb
