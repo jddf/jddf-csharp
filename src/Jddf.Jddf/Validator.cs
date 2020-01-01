@@ -18,7 +18,15 @@ namespace Jddf.Jddf
             vm.SchemaTokens = new List<List<string>>() { new List<string>() };
             vm.Errors = new List<ValidationError>();
 
-            vm.Validate(schema, instance);
+            try
+            {
+                vm.Validate(schema, instance);
+            }
+            catch (VM.MaxErrorsException)
+            {
+                // Intentionally left blank. MaxErrorsException is just a
+                // circuit-breaker, not an actual error condition.
+            }
 
             return vm.Errors;
         }
@@ -44,6 +52,11 @@ namespace Jddf.Jddf
                 switch (schema.Form)
                 {
                     case Form.Ref:
+                        if (SchemaTokens.Count == MaxDepth)
+                        {
+                            throw new MaxDepthExceededException();
+                        }
+
                         SchemaTokens.Add(new List<string>() { "definitions", schema.Ref });
                         Validate(Root.Definitions[schema.Ref], instance);
                         SchemaTokens.RemoveAt(SchemaTokens.Count - 1);
@@ -316,8 +329,19 @@ namespace Jddf.Jddf
 
             private void pushError()
             {
-
                 Errors.Add(new ValidationError(new List<string>(InstanceTokens), new List<string>(SchemaTokens[SchemaTokens.Count - 1])));
+
+                if (Errors.Count == MaxErrors)
+                {
+                    throw new MaxErrorsException();
+                }
+            }
+
+            public class MaxErrorsException : System.Exception
+            {
+                public MaxErrorsException()
+                {
+                }
             }
         }
     }

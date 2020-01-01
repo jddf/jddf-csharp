@@ -9,6 +9,63 @@ namespace Jddf.Jddf.Test
     public class ValidatorTest
     {
         [Fact]
+        public void MaxDepth()
+        {
+            var serializeOptions = new JsonSerializerOptions {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                IgnoreNullValues = true
+            };
+            serializeOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+
+            string schemaJson = @"
+                {
+                    ""definitions"": {
+                        """": { ""ref"": """"}
+                    },
+                    ""ref"": """"
+                }
+            ";
+
+            string instanceJson = "null";
+
+            Schema schema = JsonSerializer.Deserialize<Schema>(schemaJson, serializeOptions);
+            JsonElement instance = JsonSerializer.Deserialize<JsonElement>(instanceJson, serializeOptions);
+            Validator validator = new Validator();
+            validator.MaxDepth = 3;
+
+            Assert.Throws<MaxDepthExceededException>(() => {
+                validator.Validate(schema, instance);
+            });
+        }
+
+        [Fact]
+        public void MaxErrors()
+        {
+            var serializeOptions = new JsonSerializerOptions {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                IgnoreNullValues = true
+            };
+            serializeOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+
+            string schemaJson = @"
+                {
+                    ""elements"": {
+                        ""type"": ""string""
+                    }
+                }
+            ";
+
+            string instanceJson = "[null, null, null, null, null]";
+
+            Schema schema = JsonSerializer.Deserialize<Schema>(schemaJson, serializeOptions);
+            JsonElement instance = JsonSerializer.Deserialize<JsonElement>(instanceJson, serializeOptions);
+            Validator validator = new Validator();
+            validator.MaxErrors = 3;
+
+            Assert.Equal(3, validator.Validate(schema, instance).Count);
+        }
+
+        [Fact]
         public void ValidationSpec()
         {
             var serializeOptions = new JsonSerializerOptions {
