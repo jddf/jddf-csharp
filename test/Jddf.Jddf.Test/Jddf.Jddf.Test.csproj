@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Jddf.Jddf\Jddf.Jddf.csproj" />
+    <ProjectReference Include="..\..\src\Jddf.Jddf\Jddf.Jddf.csproj" />
   </ItemGroup>
 
 </Project>
