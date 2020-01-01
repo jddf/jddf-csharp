@@ -108,7 +108,8 @@ namespace Jddf.Jddf
                                     try
                                     {
                                         System.DateTimeOffset.ParseExact(instance.GetString(), RFC_3339_FORMATS, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.AssumeUniversal);
-                                    } catch (System.FormatException)
+                                    }
+                                    catch (System.FormatException)
                                     {
                                         pushError();
                                     }
@@ -162,9 +163,11 @@ namespace Jddf.Jddf
                             if (schema.Properties != null)
                             {
                                 pushSchemaToken("properties");
-                                foreach (KeyValuePair<string, Schema> entry in schema.Properties) {
+                                foreach (KeyValuePair<string, Schema> entry in schema.Properties)
+                                {
                                     pushSchemaToken(entry.Key);
-                                    if (instance.TryGetProperty(entry.Key, out JsonElement value)) {
+                                    if (instance.TryGetProperty(entry.Key, out JsonElement value))
+                                    {
                                         pushInstanceToken(entry.Key);
                                         Validate(entry.Value, value);
                                         popInstanceToken();
@@ -181,9 +184,11 @@ namespace Jddf.Jddf
                             if (schema.OptionalProperties != null)
                             {
                                 pushSchemaToken("optionalProperties");
-                                foreach (KeyValuePair<string, Schema> entry in schema.OptionalProperties) {
+                                foreach (KeyValuePair<string, Schema> entry in schema.OptionalProperties)
+                                {
                                     pushSchemaToken(entry.Key);
-                                    if (instance.TryGetProperty(entry.Key, out JsonElement value)) {
+                                    if (instance.TryGetProperty(entry.Key, out JsonElement value))
+                                    {
                                         pushInstanceToken(entry.Key);
                                         Validate(entry.Value, value);
                                         popInstanceToken();
@@ -297,7 +302,8 @@ namespace Jddf.Jddf
                 if (instance.ValueKind == JsonValueKind.Number)
                 {
                     double val = instance.GetDouble();
-                    if (val < min || val > max || val != System.Math.Round(val)) {
+                    if (val < min || val > max || val != System.Math.Round(val))
+                    {
                         pushError();
                     }
                 }

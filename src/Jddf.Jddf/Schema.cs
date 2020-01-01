@@ -26,21 +26,36 @@ namespace Jddf.Jddf
         {
             get
             {
-                if (Ref != null) {
+                if (Ref != null)
+                {
                     return Form.Ref;
-                } else if (Type != null) {
+                }
+                else if (Type != null)
+                {
                     return Form.Type;
-                } else if (Enum != null) {
+                }
+                else if (Enum != null)
+                {
                     return Form.Enum;
-                } else if (Elements != null) {
+                }
+                else if (Elements != null)
+                {
                     return Form.Elements;
-                } else if (Properties != null || OptionalProperties != null) {
+                }
+                else if (Properties != null || OptionalProperties != null)
+                {
                     return Form.Properties;
-                } else if (Values != null) {
+                }
+                else if (Values != null)
+                {
                     return Form.Values;
-                } else if (Discriminator != null) {
+                }
+                else if (Discriminator != null)
+                {
                     return Form.Discriminator;
-                } else {
+                }
+                else
+                {
                     return Form.Empty;
                 }
             }
@@ -50,50 +65,63 @@ namespace Jddf.Jddf
         {
             bool isEmpty = true;
 
-            if (Definitions != null) {
-                if (this != root) {
+            if (Definitions != null)
+            {
+                if (this != root)
+                {
                     throw new System.InvalidOperationException("non-root definition");
                 }
 
-                foreach (KeyValuePair<string, Schema> entry in Definitions) {
+                foreach (KeyValuePair<string, Schema> entry in Definitions)
+                {
                     entry.Value.verify(root);
                 }
             }
 
-            if (Ref != null) {
+            if (Ref != null)
+            {
                 isEmpty = false;
 
-                if (root.Definitions == null) {
+                if (root.Definitions == null)
+                {
                     throw new System.InvalidOperationException("ref but no definitions");
                 }
 
-                if (!root.Definitions.ContainsKey(Ref)) {
+                if (!root.Definitions.ContainsKey(Ref))
+                {
                     throw new System.InvalidOperationException("ref to non-existent definition");
                 }
             }
 
-            if (Type != null) {
-                if (!isEmpty) {
+            if (Type != null)
+            {
+                if (!isEmpty)
+                {
                     throw new System.InvalidOperationException("invalid form");
                 }
 
                 isEmpty = false;
             }
 
-            if (Enum != null) {
-                if (!isEmpty) {
+            if (Enum != null)
+            {
+                if (!isEmpty)
+                {
                     throw new System.InvalidOperationException("invalid form");
                 }
 
                 isEmpty = false;
 
-                if (Enum.Count == 0) {
+                if (Enum.Count == 0)
+                {
                     throw new System.InvalidOperationException("enum empty array");
                 }
             }
 
-            if (Elements != null) {
-                if (!isEmpty) {
+            if (Elements != null)
+            {
+                if (!isEmpty)
+                {
                     throw new System.InvalidOperationException("invalid form");
                 }
 
@@ -102,16 +130,21 @@ namespace Jddf.Jddf
                 Elements.verify(root);
             }
 
-            if (Properties != null || OptionalProperties != null) {
-                if (!isEmpty) {
+            if (Properties != null || OptionalProperties != null)
+            {
+                if (!isEmpty)
+                {
                     throw new System.InvalidOperationException("invalid form");
                 }
 
                 isEmpty = false;
 
-                if (Properties != null && OptionalProperties != null) {
-                    foreach (KeyValuePair<string, Schema> entry in Properties) {
-                        if (OptionalProperties.ContainsKey(entry.Key)) {
+                if (Properties != null && OptionalProperties != null)
+                {
+                    foreach (KeyValuePair<string, Schema> entry in Properties)
+                    {
+                        if (OptionalProperties.ContainsKey(entry.Key))
+                        {
                             throw new System.InvalidOperationException("properties and optionalProperties share key");
                         }
                     }
@@ -119,8 +152,10 @@ namespace Jddf.Jddf
             }
 
 
-            if (Values != null) {
-                if (!isEmpty) {
+            if (Values != null)
+            {
+                if (!isEmpty)
+                {
                     throw new System.InvalidOperationException("invalid form");
                 }
 
@@ -129,33 +164,41 @@ namespace Jddf.Jddf
                 Values.verify(root);
             }
 
-            if (Discriminator != null) {
-                if (!isEmpty) {
+            if (Discriminator != null)
+            {
+                if (!isEmpty)
+                {
                     throw new System.InvalidOperationException("invalid form");
                 }
 
                 isEmpty = false;
 
-                if (Discriminator.Tag == null) {
+                if (Discriminator.Tag == null)
+                {
                     throw new System.InvalidOperationException("discriminator has no tag");
                 }
 
-                if (Discriminator.Mapping == null) {
+                if (Discriminator.Mapping == null)
+                {
                     throw new System.InvalidOperationException("discriminator has no mapping");
                 }
 
-                foreach (KeyValuePair<string, Schema> entry in Discriminator.Mapping) {
+                foreach (KeyValuePair<string, Schema> entry in Discriminator.Mapping)
+                {
                     entry.Value.verify(root);
 
-                    if (entry.Value.Form != Form.Properties) {
+                    if (entry.Value.Form != Form.Properties)
+                    {
                         throw new System.InvalidOperationException("discriminator mapping value is not of properties form");
                     }
 
-                    if (entry.Value.Properties != null && entry.Value.Properties.ContainsKey(Discriminator.Tag)) {
+                    if (entry.Value.Properties != null && entry.Value.Properties.ContainsKey(Discriminator.Tag))
+                    {
                         throw new System.InvalidOperationException("discriminator mapping value has a property equal to tag's value");
                     }
 
-                    if (entry.Value.OptionalProperties != null && entry.Value.OptionalProperties.ContainsKey(Discriminator.Tag)) {
+                    if (entry.Value.OptionalProperties != null && entry.Value.OptionalProperties.ContainsKey(Discriminator.Tag))
+                    {
                         throw new System.InvalidOperationException("discriminator mapping value has an optional property equal to tag's value");
                     }
                 }

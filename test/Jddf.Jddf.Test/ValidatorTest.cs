@@ -11,7 +11,8 @@ namespace Jddf.Jddf.Test
         [Fact]
         public void MaxDepth()
         {
-            var serializeOptions = new JsonSerializerOptions {
+            var serializeOptions = new JsonSerializerOptions
+            {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 IgnoreNullValues = true
             };
@@ -33,7 +34,8 @@ namespace Jddf.Jddf.Test
             Validator validator = new Validator();
             validator.MaxDepth = 3;
 
-            Assert.Throws<MaxDepthExceededException>(() => {
+            Assert.Throws<MaxDepthExceededException>(() =>
+            {
                 validator.Validate(schema, instance);
             });
         }
@@ -41,7 +43,8 @@ namespace Jddf.Jddf.Test
         [Fact]
         public void MaxErrors()
         {
-            var serializeOptions = new JsonSerializerOptions {
+            var serializeOptions = new JsonSerializerOptions
+            {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 IgnoreNullValues = true
             };
@@ -68,7 +71,8 @@ namespace Jddf.Jddf.Test
         [Fact]
         public void ValidationSpec()
         {
-            var serializeOptions = new JsonSerializerOptions {
+            var serializeOptions = new JsonSerializerOptions
+            {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 IgnoreNullValues = true
             };
@@ -79,11 +83,14 @@ namespace Jddf.Jddf.Test
                 string fileContents = File.ReadAllText(path);
                 List<ValidationTestSuite> suites = JsonSerializer.Deserialize<List<ValidationTestSuite>>(fileContents, serializeOptions);
 
-                foreach (ValidationTestSuite suite in suites) {
-                    foreach (ValidationTestCase testCase in suite.Instances) {
+                foreach (ValidationTestSuite suite in suites)
+                {
+                    foreach (ValidationTestCase testCase in suite.Instances)
+                    {
                         List<ValidationError> expected = testCase.Errors.ConvertAll(
                             new System.Converter<ValidationTestCaseError, ValidationError>(
-                                (error) => {
+                                (error) =>
+                                {
                                     List<string> instancePath = new List<string>(error.InstancePath.Split('/'));
                                     List<string> schemaPath = new List<string>(error.SchemaPath.Split('/'));
 
@@ -95,13 +102,15 @@ namespace Jddf.Jddf.Test
                             )
                         );
 
-                        List<ValidationError> actual = (List<ValidationError>) new Validator().Validate(suite.Schema, testCase.Instance);
+                        List<ValidationError> actual = (List<ValidationError>)new Validator().Validate(suite.Schema, testCase.Instance);
 
-                        expected.Sort((ValidationError a, ValidationError b) => {
+                        expected.Sort((ValidationError a, ValidationError b) =>
+                        {
                             return System.String.Join("", a.SchemaPath).CompareTo(System.String.Join("", b.SchemaPath));
                         });
 
-                        actual.Sort((ValidationError a, ValidationError b) => {
+                        actual.Sort((ValidationError a, ValidationError b) =>
+                        {
                             return System.String.Join("", a.SchemaPath).CompareTo(System.String.Join("", b.SchemaPath));
                         });
 

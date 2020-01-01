@@ -25,7 +25,8 @@ namespace Jddf.Jddf.Test
             schema.Discriminator.Tag = "foo";
             schema.Discriminator.Mapping = new Dictionary<string, Schema>() { { "foo", new Schema() } };
 
-            var serializeOptions = new JsonSerializerOptions {
+            var serializeOptions = new JsonSerializerOptions
+            {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 IgnoreNullValues = true
             };
@@ -50,30 +51,41 @@ namespace Jddf.Jddf.Test
         [Fact]
         public void Verify()
         {
-            var serializeOptions = new JsonSerializerOptions {
+            var serializeOptions = new JsonSerializerOptions
+            {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
             };
 
             List<InvalidSchemaTestCase> testCases = JsonSerializer.Deserialize<List<InvalidSchemaTestCase>>(System.IO.File.ReadAllText("../../../../../spec/tests/invalid-schemas.json"), serializeOptions);
-            foreach (InvalidSchemaTestCase testCase in testCases) {
+            foreach (InvalidSchemaTestCase testCase in testCases)
+            {
                 // This test case is not handled, as System.Text.Json does not
                 // complain if a set is populated from JSON with repeated
                 // values.
-                if (testCase.Name.Equals("enum contains repated values")) {
+                if (testCase.Name.Equals("enum contains repated values"))
+                {
                     continue;
                 }
 
                 bool ok = false;
-                try {
+                try
+                {
                     Schema schema = JsonSerializer.Deserialize<Schema>(testCase.Schema.GetRawText(), serializeOptions);
-                    if (schema == null) {
+                    if (schema == null)
+                    {
                         ok = true;
-                    } else {
+                    }
+                    else
+                    {
                         schema.Verify();
                     }
-                } catch (JsonException) {
+                }
+                catch (JsonException)
+                {
                     ok = true;
-                } catch (InvalidOperationException) {
+                }
+                catch (InvalidOperationException)
+                {
                     ok = true;
                 }
 
