@@ -1,0 +1,76 @@
+using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using Xunit;
+
+namespace Jddf.Jddf.Test
+{
+    public class ValidatorTest
+    {
+        [Fact]
+        public void ValidationSpec()
+        {
+            var serializeOptions = new JsonSerializerOptions {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                IgnoreNullValues = true
+            };
+            serializeOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+
+            foreach (string path in Directory.GetFiles("../../../../../spec/tests/validation"))
+            {
+                string fileContents = File.ReadAllText(path);
+                List<ValidationTestSuite> suites = JsonSerializer.Deserialize<List<ValidationTestSuite>>(fileContents, serializeOptions);
+
+                foreach (ValidationTestSuite suite in suites) {
+                    foreach (ValidationTestCase testCase in suite.Instances) {
+                        List<ValidationError> expected = testCase.Errors.ConvertAll(
+                            new System.Converter<ValidationTestCaseError, ValidationError>(
+                                (error) => {
+                                    List<string> instancePath = new List<string>(error.InstancePath.Split('/'));
+                                    List<string> schemaPath = new List<string>(error.SchemaPath.Split('/'));
+
+                                    instancePath.RemoveAt(0);
+                                    schemaPath.RemoveAt(0);
+
+                                    return new ValidationError(instancePath, schemaPath);
+                                }
+                            )
+                        );
+
+                        List<ValidationError> actual = (List<ValidationError>) new Validator().Validate(suite.Schema, testCase.Instance);
+
+                        expected.Sort((ValidationError a, ValidationError b) => {
+                            return System.String.Join("", a.SchemaPath).CompareTo(System.String.Join("", b.SchemaPath));
+                        });
+
+                        actual.Sort((ValidationError a, ValidationError b) => {
+                            return System.String.Join("", a.SchemaPath).CompareTo(System.String.Join("", b.SchemaPath));
+                        });
+
+                        Assert.Equal(expected, actual);
+                    }
+                }
+            }
+        }
+
+        private class ValidationTestSuite
+        {
+            public string Name { get; set; }
+            public Schema Schema { get; set; }
+            public List<ValidationTestCase> Instances { get; set; }
+        }
+
+        private class ValidationTestCase
+        {
+            public JsonElement Instance { get; set; }
+            public List<ValidationTestCaseError> Errors { get; set; }
+        }
+
+        private class ValidationTestCaseError
+        {
+            public string InstancePath { get; set; }
+            public string SchemaPath { get; set; }
+        }
+    }
+}

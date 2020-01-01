@@ -78,7 +78,6 @@ namespace Jddf.Jddf.Test
                 }
 
                 Assert.True(ok, testCase.Name);
-
             }
         }
 
