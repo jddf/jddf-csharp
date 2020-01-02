@@ -1,4 +1,4 @@
-# jddf-csharp ![Nuget](https://img.shields.io/nuget/v/Jddf.Jddf)
+# jddf-csharp [![Nuget](https://img.shields.io/nuget/v/Jddf.Jddf)][nuget]
 
 This package is a C# / .NET implementation of **JSON Data Definition Format**.
 In particular, it lets you:
