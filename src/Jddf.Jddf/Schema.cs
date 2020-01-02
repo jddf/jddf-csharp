@@ -61,6 +61,11 @@ namespace Jddf.Jddf
             }
         }
 
+        public bool ShouldSerializeForm()
+        {
+            return false;
+        }
+
         private Schema verify(Schema root)
         {
             bool isEmpty = true;
