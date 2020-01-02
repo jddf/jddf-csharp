@@ -15,8 +15,6 @@ This package integrates with both [`Newtonsoft.Json`][newtonsoft] (also known as
 
 ## Installation
 
-This package is available on nuget.org under the name `Jddf.Jddf`.
-
 [The `Jddf.Jddf` package page on nuget.org][nuget] has information on how to
 install this package as a dependency. If you're using the .NET CLI, you can
 install `Jddf.Jddf` by running:
