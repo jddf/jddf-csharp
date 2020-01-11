@@ -1,4 +1,4 @@
-# jddf-csharp [![Nuget](https://img.shields.io/nuget/v/Jddf.Jddf)][nuget]
+# jddf-csharp [![][nuget-badge]][nuget-url] [![][ci-badge]][ci-url]
 
 This package is a C# / .NET implementation of **JSON Data Definition Format**.
 In particular, it lets you:
@@ -12,18 +12,20 @@ This package integrates with both [`Newtonsoft.Json`][newtonsoft] (also known as
 
 [newtonsoft]: https://www.nuget.org/packages/Newtonsoft.Json
 [system]: https://www.nuget.org/packages/System.Text.Json
+[nuget-badge]: https://img.shields.io/nuget/v/Jddf.Jddf
+[ci-badge]: https://github.com/jddf/jddf-csharp/workflows/CSharp%20CI/badge.svg?branch=master
+[nuget-url]: https://www.nuget.org/packages/Jddf.Jddf
+[ci-url]: https://github.com/jddf/jddf-csharp/actions
 
 ## Installation
 
-[The `Jddf.Jddf` package page on nuget.org][nuget] has information on how to
+[The `Jddf.Jddf` package page on nuget.org][nuget-url] has information on how to
 install this package as a dependency. If you're using the .NET CLI, you can
 install `Jddf.Jddf` by running:
 
 ```bash
 dotnet add package Jddf.Jddf
 ```
-
-[nuget]: https://www.nuget.org/packages/Jddf.Jddf/
 
 ## Usage
 
@@ -60,7 +62,7 @@ string schemaJson = @"
 How you parse this JSON into a JDDF schema (an instance of `Jddf.Jddf.Schema`)
 depends on what JSON library you're using:
 
-* Parsing a JDDF schema using `System.Text.Json`:
+- Parsing a JDDF schema using `System.Text.Json`:
 
   ```cs
   using Jddf.Jddf;
@@ -77,7 +79,7 @@ depends on what JSON library you're using:
   Schema schema = JsonSerializer.Deserialize<Schema>(schemaJson, serializeOptions);
   ```
 
-* Parsing a JDDF schema using `Newtonsoft.Json`:
+- Parsing a JDDF schema using `Newtonsoft.Json`:
 
   ```cs
   using Newtonsoft.Json;
