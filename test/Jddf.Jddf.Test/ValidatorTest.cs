@@ -65,7 +65,7 @@ namespace Jddf.Jddf.Test
             Validator validator = new Validator();
             validator.MaxErrors = 3;
 
-            Assert.Equal(2, validator.Validate(schema, instance).Count);
+            Assert.Equal(3, validator.Validate(schema, instance).Count);
         }
 
         [Fact]
